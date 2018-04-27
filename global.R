@@ -5,6 +5,8 @@ library(tidyr)
 library(ggplot2)
 library(shinydashboard)
 library(DT)
+library(rgdal)
+library(sp)
 
 collisions = data.frame(fread('./collisions.csv'))
 collisions$date = as.Date(collisions$date)
