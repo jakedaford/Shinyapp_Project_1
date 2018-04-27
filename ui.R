@@ -13,7 +13,7 @@ shinyUI(dashboardPage(
       menuItem("Data by borough", tabName = "data_by_borough", icon = icon("bar-chart-o")),
       menuItem("Fatality Map", tabName = "map", icon = icon("map"))
     ),
-    sliderInput("hour_slider", label = h3("Hour Range (military time)"),
+    sliderInput("hour_slider", label = h3("Hour Range"),
                 min = 0, max = 24, value = c(0, 24)),
     checkboxGroupInput("days_of_week", label = h3("Days of Week"), 
                        choices = list("Monday" = "Monday",
@@ -25,14 +25,6 @@ shinyUI(dashboardPage(
                                       "Sunday" = "Sunday"),
                        selected = c("Monday","Tuesday", "Wednesday", "Thursday",
                                     "Friday", "Saturday", "Sunday"))
-    # checkboxGroupInput("borough", label = h3("Borough"), 
-    #                    choices = list("MANHATTAN" = "MANHATTAN",
-    #                                   "BROOKLYN" = "BROOKLYN",
-    #                                   "QUEENS" = "QUEENS",
-    #                                   "BRONX" = "BRONX",
-    #                                   "STATEN ISLAND" = "STATEN ISLAND",
-    #                                   "Unlabeled" = ""),
-    #                    selected = c("MANHATTAN", "BROOKLYN"))
   ),
   dashboardBody(
     tags$head(
@@ -42,9 +34,21 @@ shinyUI(dashboardPage(
       tabItem(tabName = "map",
               fluidRow(box(plotOutput("fatality_map"), width = 8),
               box(DTOutput("fatality_table_by_borough"), width = 4))),
+#      tabItem(tabName = "data_by_borough",
+#              fluidRow(box(plotOutput("borough_plot"), width = 8),
+#                       box(HERE GOES THE SELECTOR, width = 4))),
       tabItem(tabName = "data",
               fluidRow(box(plotOutput("accident_density_plot"), width = 12)))
     )
   )
 ))
 
+
+# checkboxGroupInput("borough", label = h3("Borough"), 
+#                    choices = list("MANHATTAN" = "MANHATTAN",
+#                                   "BROOKLYN" = "BROOKLYN",
+#                                   "QUEENS" = "QUEENS",
+#                                   "BRONX" = "BRONX",
+#                                   "STATEN ISLAND" = "STATEN ISLAND",
+#                                   "Unlabeled" = ""),
+#                    selected = c("MANHATTAN", "BROOKLYN"))

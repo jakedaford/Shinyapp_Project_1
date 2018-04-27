@@ -8,12 +8,16 @@ library(ggplot2)
 
 shinyServer(function(input, output, session) {
   
-
-  output$accident_density_plot <- renderPlot({
+  collisions_subset <- reactive({
     collisions %>%
       filter(time_24 >= input$hour_slider[1] &
                time_24 <= input$hour_slider[2] &
-               weekdays(date) %in% input$days_of_week) %>%
+               weekdays(date) %in% input$days_of_week)
+  })
+  
+
+  output$accident_density_plot <- renderPlot({
+    collisions_subset() %>%
       ggplot(aes(time_24, fill = weekdays(date), colour = weekdays(date))) +
       geom_density(alpha=0.1) +
       ggtitle("Hourly Accident Distribution") +
