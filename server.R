@@ -15,6 +15,12 @@ shinyServer(function(input, output, session) {
                weekdays(date) %in% input$days_of_week)
   })
   
+  lethal_collisions_subset <- reactive({
+    lethal_collisions %>%
+      filter(time_24 >= input$hour_slider[1] &
+               time_24 <= input$hour_slider[2] &
+               weekdays(date) %in% input$days_of_week)
+  })
 
   output$accident_density_plot <- renderPlot({
     collisions_subset() %>%
@@ -25,12 +31,16 @@ shinyServer(function(input, output, session) {
       theme(plot.title = element_text(hjust = 0.5))
   })
   
-  lethal_collisions_subset <- reactive({
-    lethal_collisions %>%
-      filter(time_24 >= input$hour_slider[1] &
-               time_24 <= input$hour_slider[2] &
-               weekdays(date) %in% input$days_of_week)
+  output$borough_plot <- renderPlot({
+    collisions_subset() %>%
+      filter(borough %in% input$borough) %>%
+      ggplot(aes(time_24, fill = borough, colour = borough)) +
+      geom_density(alpha=0.1) +
+      ggtitle("Hourly Accident Distribution") +
+      xlab("Time of Day") + ylab("Percent of Accidents") +
+      theme(plot.title = element_text(hjust = 0.5))
   })
+  
   
   output$fatality_map <- renderPlot({
     ggplot() +
@@ -47,6 +57,9 @@ shinyServer(function(input, output, session) {
     lethal_collisions_subset() %>%
       group_by(borough) %>%
       summarise(Death_Count = n()), rownames = F)
+  
+  
+  
 })
 
 

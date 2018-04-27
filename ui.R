@@ -34,21 +34,19 @@ shinyUI(dashboardPage(
       tabItem(tabName = "map",
               fluidRow(box(plotOutput("fatality_map"), width = 8),
               box(DTOutput("fatality_table_by_borough"), width = 4))),
-#      tabItem(tabName = "data_by_borough",
-#              fluidRow(box(plotOutput("borough_plot"), width = 8),
-#                       box(HERE GOES THE SELECTOR, width = 4))),
+     tabItem(tabName = "data_by_borough",
+             fluidRow(box(plotOutput("borough_plot"), width = 8),
+                      box(
+                        checkboxGroupInput("borough", label = h3("Borough"),
+                                           choices = list("MANHATTAN" = "MANHATTAN",
+                                                          "BROOKLYN" = "BROOKLYN",
+                                                          "QUEENS" = "QUEENS",
+                                                          "BRONX" = "BRONX",
+                                                          "STATEN ISLAND" = "STATEN ISLAND"),
+                                           selected = c("MANHATTAN", "STATEN ISLAND")),
+                        width = 4))),
       tabItem(tabName = "data",
               fluidRow(box(plotOutput("accident_density_plot"), width = 12)))
     )
   )
 ))
-
-
-# checkboxGroupInput("borough", label = h3("Borough"), 
-#                    choices = list("MANHATTAN" = "MANHATTAN",
-#                                   "BROOKLYN" = "BROOKLYN",
-#                                   "QUEENS" = "QUEENS",
-#                                   "BRONX" = "BRONX",
-#                                   "STATEN ISLAND" = "STATEN ISLAND",
-#                                   "Unlabeled" = ""),
-#                    selected = c("MANHATTAN", "BROOKLYN"))
