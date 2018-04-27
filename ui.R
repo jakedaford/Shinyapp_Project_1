@@ -1,34 +1,88 @@
+library(DT)
 library(shiny)
-library(data.table)
+library(shinydashboard)
 
-
-
-fluidPage(
-  titlePanel("NYC Traffic Collisions"),
-  sidebarLayout(
-    sidebarPanel = sidebarPanel(
-      sliderInput("hour_slider", label = h3("Hour Range (military time)"),
-                  min = 0, max = 24, value = c(2, 20)),
-      checkboxGroupInput("days_of_week", label = h3("Days of Week"), 
-                         choices = list("Monday" = "Monday",
-                                        "Tuesday" = "Tuesday",
-                                        "Wednesday" = "Wednesday",
-                                        "Thursday" = "Thursday",
-                                        "Friday" = "Friday",
-                                        "Saturday" = "Saturday",
-                                        "Sunday" = "Sunday"),
-                         selected = c("Tuesday", "Wednesday", "Saturday", "Sunday")),
-      checkboxGroupInput("borough", label = h3("Borough"), 
-                         choices = list("MANHATTAN" = "MANHATTAN",
-                                        "BROOKLYN" = "BROOKLYN",
-                                        "QUEENS" = "QUEENS",
-                                        "BRONX" = "BRONX",
-                                        "STATEN ISLAND" = "STATEN ISLAND",
-                                        "Unlabeled" = ""),
-                         selected = c("MANHATTAN", "BROOKLYN"))
+shinyUI(dashboardPage(
+  dashboardHeader(title = "NYC Traffic Collisions"),
+  dashboardSidebar(
+    
+    sidebarUserPanel("NYC DSA",
+                     image = "https://yt3.ggpht.com/-04uuTMHfDz4/AAAAAAAAAAI/AAAAAAAAAAA/Kjeupp-eNNg/s100-c-k-no-rj-c0xffffff/photo.jpg"),
+    sidebarMenu(
+      menuItem("Hourly Collision Data", tabName = "data", icon = icon("bar-chart-o")),
+      menuItem("Data by borough", tabName = "data_by_borough", icon = icon("bar-chart-o")),
+      menuItem("Fatality Map", tabName = "map", icon = icon("map"))
     ),
-    mainPanel = mainPanel(
-      plotOutput("accident_density_plot")
+    sliderInput("hour_slider", label = h3("Hour Range (military time)"),
+                min = 0, max = 24, value = c(2, 20)),
+    checkboxGroupInput("days_of_week", label = h3("Days of Week"), 
+                       choices = list("Monday" = "Monday",
+                                      "Tuesday" = "Tuesday",
+                                      "Wednesday" = "Wednesday",
+                                      "Thursday" = "Thursday",
+                                      "Friday" = "Friday",
+                                      "Saturday" = "Saturday",
+                                      "Sunday" = "Sunday"),
+                       selected = c("Tuesday", "Wednesday", "Saturday", "Sunday"))
+    # checkboxGroupInput("borough", label = h3("Borough"), 
+    #                    choices = list("MANHATTAN" = "MANHATTAN",
+    #                                   "BROOKLYN" = "BROOKLYN",
+    #                                   "QUEENS" = "QUEENS",
+    #                                   "BRONX" = "BRONX",
+    #                                   "STATEN ISLAND" = "STATEN ISLAND",
+    #                                   "Unlabeled" = ""),
+    #                    selected = c("MANHATTAN", "BROOKLYN"))
+  ),
+  dashboardBody(
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+    ),
+    tabItems(
+      tabItem(tabName = "map",
+              #verbatimTextOutput("hello")),
+              fluidRow(box(plotOutput("fatality_map"), width = 8),
+              box(DTOutput("fatality_table_by_borough"), width = 4))),
+      tabItem(tabName = "data",
+              fluidRow(box(plotOutput("accident_density_plot"), width = 12)))
     )
   )
-)
+))
+
+
+
+
+
+# library(shiny)
+# library(data.table)
+
+
+
+# fluidPage(
+#   titlePanel("NYC Traffic Collisions"),
+#   sidebarLayout(
+#     sidebarPanel = sidebarPanel(
+#       sliderInput("hour_slider", label = h3("Hour Range (military time)"),
+#                   min = 0, max = 24, value = c(2, 20)),
+#       checkboxGroupInput("days_of_week", label = h3("Days of Week"), 
+#                          choices = list("Monday" = "Monday",
+#                                         "Tuesday" = "Tuesday",
+#                                         "Wednesday" = "Wednesday",
+#                                         "Thursday" = "Thursday",
+#                                         "Friday" = "Friday",
+#                                         "Saturday" = "Saturday",
+#                                         "Sunday" = "Sunday"),
+#                          selected = c("Tuesday", "Wednesday", "Saturday", "Sunday")),
+#       checkboxGroupInput("borough", label = h3("Borough"), 
+#                          choices = list("MANHATTAN" = "MANHATTAN",
+#                                         "BROOKLYN" = "BROOKLYN",
+#                                         "QUEENS" = "QUEENS",
+#                                         "BRONX" = "BRONX",
+#                                         "STATEN ISLAND" = "STATEN ISLAND",
+#                                         "Unlabeled" = ""),
+#                          selected = c("MANHATTAN", "BROOKLYN"))
+#     ),
+#     mainPanel = mainPanel(
+#       plotOutput("accident_density_plot")
+#     )
+#   )
+# )

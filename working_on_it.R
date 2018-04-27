@@ -145,8 +145,21 @@ str(collisions)
 
 str(collisions)
 
+### making a facet wrap for boroughs...
 
+collisions_somehours_somedays_by_borough = collisions %>%
+  filter(borough != "") %>%
+  filter(weekdays(date) %in% c('Monday', 'Friday', 'Saturday', 'Sunday')) %>%
+  filter(time_24 < 24 & time_24 > 1)
 
+y = ggplot(collisions_somehours_somedays_by_borough, aes(time_24,
+                                              fill = borough,
+                                              colour = borough))
+y + geom_density(alpha=0.1) + facet_wrap(~ borough, 2)
 
+unique(collisions_somehours_somedays_by_borough$borough)
 
+is.na(unique(collisions_somehours_somedays_by_borough$borough))
+
+unique(collisions$borough)
 
