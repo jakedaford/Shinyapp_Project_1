@@ -22,8 +22,13 @@ library(sp)
 
 #collisions[cols_to_be_factors] = lapply(collisions[cols_to_be_factors], factor)
 
-#write.csv(collisions, file='collisions_modified.csv', row.names=FALSE)
-#str(collisions)
+write.csv(collisions_lite, file='collisions_lite.csv', row.names=FALSE)
+str(collisions)
+
+collisions_lite = select(collisions, c(date, borough, latitude, longitude,
+                                       number_of_persons_killed, time_24))
+
+str(collisions_lite)
 
 #wrote this to a csv so should be good now
 

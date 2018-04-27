@@ -8,7 +8,7 @@ library(DT)
 library(rgdal)
 library(sp)
 
-collisions = data.frame(fread('./collisions.csv'))
+collisions = data.frame(fread('./collisions_lite.csv'))
 collisions$date = as.Date(collisions$date)
 
 lethal_collisions = collisions %>%

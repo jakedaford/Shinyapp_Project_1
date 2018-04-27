@@ -40,7 +40,6 @@ shinyUI(dashboardPage(
     ),
     tabItems(
       tabItem(tabName = "map",
-              #verbatimTextOutput("hello")),
               fluidRow(box(plotOutput("fatality_map"), width = 8),
               box(DTOutput("fatality_table_by_borough"), width = 4))),
       tabItem(tabName = "data",
