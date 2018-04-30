@@ -53,6 +53,18 @@ shinyServer(function(input, output, session) {
       theme(plot.title = element_text(hjust = 0.5))
   })
   
+  output$leaflet_fatality_map <- renderLeaflet({
+    leaflet() %>%
+      addTiles() %>%
+      setView(-73.96, 40.72, zoom = 12) %>%
+      addMarkers(lng=lethal_collisions_subset()$longitude, lat=lethal_collisions_subset()$latitude,
+                 popup=paste(lethal_collisions_subset()$number_of_persons_killed,
+                             ifelse(lethal_collisions_subset()$number_of_persons_killed == 1,
+                                    " person died here on ",
+                                    "people died here on "),
+                             lethal_collisions_subset()$date))
+  })
+  
   output$fatality_table_by_borough <- DT::renderDataTable(
     lethal_collisions_subset() %>%
       group_by(borough) %>%

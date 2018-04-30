@@ -73,6 +73,13 @@ ggplot() +
   coord_equal() + geom_point(data = lethal_collisions,
                              aes(x=longitude, y=latitude), color="red", alpha = .1)
 
+
+
+
+
+
+
+
 nrow(lethal_collisions)
 
 injurious_collisions = collisions %>%
@@ -167,4 +174,23 @@ unique(collisions_somehours_somedays_by_borough$borough)
 is.na(unique(collisions_somehours_somedays_by_borough$borough))
 
 unique(collisions$borough)
+
+
+
+library(leaflet)
+
+m <- leaflet() %>%
+  addTiles() %>%
+  setView(-73.96, 40.72, zoom = 12) %>%
+  # Add default OpenStreetMap map tiles
+  addMarkers(lng=lethal_collisions$longitude, lat=lethal_collisions$latitude,
+             popup=paste(lethal_collisions$number_of_persons_killed,
+                         ifelse(lethal_collisions$number_of_persons_killed == 1,
+                                " person died here on ",
+                                "people died here on "),
+                         lethal_collisions$date))
+m 
+
+head(lethal_collisions)
+
 

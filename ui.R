@@ -11,7 +11,8 @@ shinyUI(dashboardPage(
     sidebarMenu(
       menuItem("Hourly Collision Data", tabName = "data", icon = icon("bar-chart-o")),
       menuItem("Data by borough", tabName = "data_by_borough", icon = icon("bar-chart-o")),
-      menuItem("Fatality Map", tabName = "map", icon = icon("map"))
+      menuItem("Fatality Map", tabName = "map", icon = icon("map")),
+      menuItem("Interactive Fatality Map", tabName = "leafletmap", icon = icon("map"))
     ),
     sliderInput("hour_slider", label = h3("Hour Range"),
                 min = 0, max = 24, value = c(0, 24)),
@@ -34,7 +35,9 @@ shinyUI(dashboardPage(
       tabItem(tabName = "map",
               fluidRow(box(plotOutput("fatality_map"), width = 8),
               box(DTOutput("fatality_table_by_borough"), width = 4))),
-     tabItem(tabName = "data_by_borough",
+      tabItem(tabName = "leafletmap",
+              fluidRow(box(leafletOutput("leaflet_fatality_map"), width = 12))),
+      tabItem(tabName = "data_by_borough",
              fluidRow(box(plotOutput("borough_plot"), width = 8),
                       box(
                         checkboxGroupInput("borough", label = h3("Borough"),
