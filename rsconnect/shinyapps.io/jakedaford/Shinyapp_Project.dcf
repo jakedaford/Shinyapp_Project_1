@@ -5,9 +5,9 @@ account: jakedaford
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 335114
-bundleId: 1350006
+bundleId: 1350232
 url: https://jakedaford.shinyapps.io/Shinyapp_Project/
-when: 1525204600.9895
+when: 1525211184.12964
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: collisions.csv|nyc_collisions_orig.csv|working_on_it.R
