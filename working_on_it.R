@@ -193,4 +193,4 @@ m
 
 head(lethal_collisions)
 
-
+unique(year(lethal_collisions$date))
