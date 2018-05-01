@@ -33,7 +33,7 @@ shinyServer(function(input, output, session) {
       geom_density(alpha=0.1) +
       ggtitle("Hourly Accident Distribution") +
       xlab("Time of Day") + ylab("Percent of Accidents") +
-      theme(plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5)) + labs(fill = "Day of Week", color = "Day of Week")
   })
   
   output$borough_plot <- renderPlot({

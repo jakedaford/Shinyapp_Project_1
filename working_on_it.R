@@ -140,7 +140,7 @@ collisions_somehours_somedays = collisions %>%
   filter(time_24 < 24 & time_24 > 6)
 
 w = ggplot(collisions_somehours_somedays, aes(time_24))
-w + geom_density()
+w + geom_density() 
 
 collisions_somehours_somedays = collisions %>%
   filter(weekdays(collisions$date) %in% c('Monday', 'Friday', 'Saturday', 'Sunday')) %>%
@@ -149,7 +149,7 @@ collisions_somehours_somedays = collisions %>%
 v = ggplot(collisions_somehours_somedays, aes(time_24,
                                               fill = weekdays(date),
                                               colour = weekdays(date)))
-v + geom_density(alpha=0.1)
+v + geom_density(alpha=0.1) + labs(fill = "Day of Week", color = "Day of Week")
 
 
 
@@ -194,3 +194,9 @@ m
 head(lethal_collisions)
 
 unique(year(lethal_collisions$date))
+
+
+
+
+
+
