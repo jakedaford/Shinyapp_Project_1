@@ -66,13 +66,18 @@ shinyServer(function(input, output, session) {
                  popup=paste(lethal_collisions_subset()$number_of_persons_killed,
                              ifelse(lethal_collisions_subset()$number_of_persons_killed == 1,
                                     " person died here on ",
-                                    "people died here on "),
+                                    " people died here on "),
                              lethal_collisions_subset()$date))
   })
   
   output$fatality_table_by_borough <- DT::renderDataTable(
     lethal_collisions_subset() %>%
       group_by(borough) %>%
+      summarise(Death_Count = n()), rownames = F)
+  
+  output$fatality_table_by_year <- DT::renderDataTable(
+    lethal_collisions_subset() %>%
+      group_by(year(date)) %>%
       summarise(Death_Count = n()), rownames = F)
   
   

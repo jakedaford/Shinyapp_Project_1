@@ -16,4 +16,3 @@ lethal_collisions = collisions %>%
 
 nyc_sf <- readOGR("./Borough_Boundaries/geo_export_f3ba0d5a-7d6b-4731-a782-16df3f4251b5.shp")
 row.names(nyc_sf) <- c("Queens", "Staten Island", "Bronx", "Brooklyn", "Manhattan")
-

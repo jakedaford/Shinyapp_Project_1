@@ -48,7 +48,8 @@ shinyUI(dashboardPage(
                                    selected = c("2012", "2013",
                                                 "2014", "2015",
                                                 "2016", "2017")),
-                width = 3))),
+                width = 4),
+                box(DTOutput("fatality_table_by_year"), width = 8))),
       tabItem(tabName = "data_by_borough",
              fluidRow(box(plotOutput("borough_plot"), width = 8),
                       box(
