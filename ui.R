@@ -1,6 +1,14 @@
-library(DT)
 library(shiny)
+library(data.table)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 library(shinydashboard)
+library(DT)
+library(rgdal)
+library(sp)
+library(leaflet)
+
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "NYC Traffic Collisions"),
@@ -48,8 +56,9 @@ shinyUI(dashboardPage(
                                    selected = c("2012", "2013",
                                                 "2014", "2015",
                                                 "2016", "2017")),
-                width = 4),
-                box(DTOutput("fatality_table_by_year"), width = 8))),
+                checkboxInput("checkbox", label = "Only Show Multi-death Accidents", value = FALSE),
+                width = 4, height = 350),
+                box(DTOutput("fatality_table_by_year"), width = 8, height = 350))),
       tabItem(tabName = "data_by_borough",
              fluidRow(box(plotOutput("borough_plot"), width = 8),
                       box(

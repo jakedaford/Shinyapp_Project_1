@@ -3,6 +3,11 @@ library(data.table)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(shinydashboard)
+library(DT)
+library(rgdal)
+library(sp)
+library(leaflet)
 
 
 
@@ -22,9 +27,22 @@ shinyServer(function(input, output, session) {
                weekdays(date) %in% input$days_of_week)
   })
   
+  very_lethal_collisions_subset <- reactive({
+    very_lethal_collisions %>%
+      filter(time_24 >= input$hour_slider[1] &
+               time_24 <= input$hour_slider[2] &
+               weekdays(date) %in% input$days_of_week)
+  })
+  
   lethal_collisions_subset_year <- reactive({
-    lethal_collisions_subset() %>%
+    if (input$checkbox == FALSE) {
+      lethal_collisions_subset() %>%
       filter(year(date) %in% input$year)
+      }
+    else {
+      very_lethal_collisions_subset() %>%
+      filter(year(date) %in% input$year)
+    }
   })
 
   output$accident_density_plot <- renderPlot({
@@ -68,12 +86,13 @@ shinyServer(function(input, output, session) {
     leaflet() %>%
       addTiles() %>%
       setView(-73.96, 40.72, zoom = 12) %>%
-      addMarkers(lng=lethal_collisions_subset_year()$longitude, lat=lethal_collisions_subset_year()$latitude,
-                 popup=paste(lethal_collisions_subset()$number_of_persons_killed,
-                             ifelse(lethal_collisions_subset()$number_of_persons_killed == 1,
+      addCircleMarkers(lng=lethal_collisions_subset_year()$longitude,
+                 lat=lethal_collisions_subset_year()$latitude,
+                 popup=paste(lethal_collisions_subset_year()$number_of_persons_killed,
+                             ifelse(lethal_collisions_subset_year()$number_of_persons_killed == 1,
                                     " person died here on ",
                                     " people died here on "),
-                             lethal_collisions_subset()$date))
+                             lethal_collisions_subset_year()$date))
   })
   
   output$fatality_table_by_borough <- DT::renderDataTable(
