@@ -11,15 +11,16 @@ library(leaflet)
 
 
 shinyUI(dashboardPage(
-  dashboardHeader(title = "NYC Traffic Collisions"),
+  dashboardHeader(title = "NYC Collisions"),
   dashboardSidebar(
     
-    sidebarUserPanel("NYC DSA",
+    sidebarUserPanel("Jake Ralston",
                      image = "https://yt3.ggpht.com/-04uuTMHfDz4/AAAAAAAAAAI/AAAAAAAAAAA/Kjeupp-eNNg/s100-c-k-no-rj-c0xffffff/photo.jpg"),
     sidebarMenu(
+      
       menuItem("Hourly Collision Data", tabName = "data", icon = icon("bar-chart-o")),
-      menuItem("Data by borough", tabName = "data_by_borough", icon = icon("bar-chart-o")),
-      menuItem("Fatality Map", tabName = "map", icon = icon("map")),
+      menuItem("Hourly Borough Comparison", tabName = "data_by_borough", icon = icon("bar-chart-o")),
+      menuItem("Raw Fatality Map", tabName = "map", icon = icon("map")),
       menuItem("Interactive Fatality Map", tabName = "leafletmap", icon = icon("map"))
     ),
     sliderInput("hour_slider", label = h3("Hour Range"),
